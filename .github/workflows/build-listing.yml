@@ -10,9 +10,6 @@ jobs:
   # Build the VPM Listing Website and deploy to GitHub Pages
   build-listing:
     name: build-listing
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       
