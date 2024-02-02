@@ -56,7 +56,8 @@ jobs:
       #   uses: actions/deploy-pages@9dbe3824824f8a1377b8e298bafde1a50ede43e5
 
       # Trigger repository listing
-      - uses: actions/github-script@v7
+      - name: Trigger repository listing
+        uses: actions/github-script@v7
         with:
           script: |
             await github.rest.actions.createWorkflowDispatch({
