@@ -52,7 +52,7 @@ jobs:
     
       # Echo version number
       - name: Echo version number
-        run: echo "v${{steps.version.outputs.prop}}"
+        run: echo "v${{ steps.version.outputs.value }}"
 
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
@@ -74,7 +74,7 @@ jobs:
       - name: Create UnityPackage
         uses: pCYSl5EDgo/create-unitypackage@cfcd3cf0391a5ef1306342794866a9897c32af0b
         with:
-          package-path: ${{ env.unityPackage }}
+          package-path: "${{ env.unityPackage }}"
           include-files: metaList
       
       # Make a release tag of the version from the package.json file 
