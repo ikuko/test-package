@@ -62,8 +62,8 @@ jobs:
           fi
     
       # Echo version number
-      - name: Check tag consistency
-      - run: echo ${{steps.version.outputs.prop}}
+      - name: Echo version number
+        run: echo ${{steps.version.outputs.prop}}
 
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
