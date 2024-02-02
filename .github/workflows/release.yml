@@ -2,6 +2,12 @@ name: Build Release
 
 on: 
   workflow_dispatch:
+  pull_request: 
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
 
 jobs:
 
@@ -45,7 +51,20 @@ jobs:
         with: 
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
+
+      # Check tag consistency
+      - name: Check tag consistency
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          if [ "${{ steps.version.outputs.prop }}" != "${GITHUB_REF##*/}" ]; then
+            echo "Version in package.json does not match tag name: ${{ steps.version.outputs.prop }} != ${GITHUB_REF##*/}"
+            exit 1
+          fi
     
+      # Echo version number
+      - name: Check tag consistency
+      - run: echo ${{steps.version.outputs.prop}}
+
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
@@ -73,13 +92,18 @@ jobs:
       - name: Create Tag
         id: tag_version
         uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
+        if: startsWith(github.ref, 'refs/main')
         with:
           tag: "${{ env.version }}"
+          force_push_tag: true
       
       # Publish the Release to GitHub
       - name: Make Release
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        if: startsWith(github.ref, 'refs/tags/')
         with:
+          draft: true
+          generate_release_notes: true
           files: |
             ${{ env.zipFile }}
             ${{ env.unityPackage }}
