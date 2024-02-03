@@ -66,7 +66,7 @@ jobs:
         env:
           TOKEN: ${{ steps.generate.outputs.token }}
         run: |
-          echo "TOKEN: ${TOKEN}"
+          echo "TOKEN: ${TOKEN:4}"
 
       # Trigger repository listing
       - name: Trigger repository listing
