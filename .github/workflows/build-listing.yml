@@ -55,9 +55,9 @@ jobs:
       #   id: deployment
       #   uses: actions/deploy-pages@9dbe3824824f8a1377b8e298bafde1a50ede43e5
 
-      # Generate GitHub Apps token
-      - name: Generate GitHub Apps token
-        id: generate
+      # Create GitHub Apps token
+      - name: Create GitHub Apps token
+        id: app-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ vars.APP_ID }}
