@@ -55,11 +55,6 @@ jobs:
       #   id: deployment
       #   uses: actions/deploy-pages@9dbe3824824f8a1377b8e298bafde1a50ede43e5
 
-      - name: Echo Token
-        env:
-          APPID: ${{ secrets.APP_ID }}
-        run: |
-          echo "APP_ID: ${APPID}"
       # Generate GitHub Apps token
       - name: Generate GitHub Apps token
         id: generate
@@ -67,6 +62,11 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }}
+      - name: Echo Token
+        env:
+          TOKEN: ${{ steps.generate.outputs.token }}
+        run: |
+          echo "TOKEN: ${TOKEN}"
 
       # Trigger repository listing
       - name: Trigger repository listing
